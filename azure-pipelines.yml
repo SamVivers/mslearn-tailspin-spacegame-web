@@ -82,13 +82,14 @@ steps:
 
 - task: SonarCloudAnalyze@1
   displayName: 'Run SonarCloud code analysis'
-    condition: |
-    and
-    (
-      succeeded(),
-      eq(variables['Build.Reason'], 'PullRequest'),
-      eq(variables['System.PullRequest.TargetBranch'], 'master')
-    )
+  condition: |
+  and
+  (
+    succeeded(),
+    eq(variables['Build.Reason'], 'PullRequest'),
+    eq(variables['System.PullRequest.TargetBranch'], 'master')
+  )
+  
 - task: DotNetCoreCLI@2
   displayName: 'Publish the project - $(buildConfiguration)'
   inputs:
@@ -100,13 +101,13 @@ steps:
 
 - task: WhiteSource Bolt@19
   displayName: 'Run WhiteSource Bolt'
-    condition: |
-      and
-      (
-        succeeded(),
-        eq(variables['Build.Reason'], 'PullRequest'),
-        eq(variables['System.PullRequest.TargetBranch'], 'master')
-      )
+  condition: |
+    and
+    (
+      succeeded(),
+      eq(variables['Build.Reason'], 'PullRequest'),
+      eq(variables['System.PullRequest.TargetBranch'], 'master')
+    )
 
 - task: SonarCloudPublish@1
   displayName: 'Publish SonarCloud quality gate results'
